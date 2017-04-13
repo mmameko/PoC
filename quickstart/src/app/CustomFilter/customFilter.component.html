@@ -1,0 +1,32 @@
+<div class="filter-container">
+  <div class="search-field_container">
+    <input #search placeholder="Start typing..." class="search-field" [disabled]="inLoading" autofocus>
+  </div>
+  <hr/>
+  <div *ngIf="items.length !== 0;then full else empty"></div>
+  <template #full>
+    <div class="items-list-count">
+      <b>Total results count: {{itemsCount}}</b>
+    </div>
+    <ul class="items-list_container items-list">
+      <li *ngFor="let item of items" class="item" [ngClass]="{'item__selected': item.selected}">
+        <input type="checkbox" [id]="item.name" [(ngModel)]="item.selected" class="item-checkbox">
+        <label [for]="item.name">{{item.name}}</label>
+      </li>
+    </ul>
+  </template>
+  <template #empty>
+    <div class="items-list_container items-list__empty">
+      No items had been found yet...
+    </div>
+  </template>
+  <hr/>
+  <div class="apply-btn_container">
+    <button #applyBtn class="apply-btn" [disabled]="inLoading||!isReadyToApply">Apply</button>
+  </div>
+  <div #overlay class="overlay" [ngClass]="{'hidden': !inLoading}">
+    <span class="overlay-text">
+      Data Loading...
+    </span>
+  </div>
+</div>
